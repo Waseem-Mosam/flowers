@@ -11,14 +11,17 @@
 }
 
 .flower-container {
+  position: relative;
   display: flex;
   align-items: flex-end;
   justify-content: center;
   min-height: 100vh;
+  min-height: 100dvh;
   background-color: var(--dark-color);
   overflow: hidden;
   perspective: 1000px;
   padding: 50px 0px;
+  padding-bottom: calc(50px + env(safe-area-inset-bottom, 0px));
 }
 
 .night {
@@ -1365,9 +1368,13 @@
 .welcome-screen {
   min-height: 100vh;
   min-height: 100svh;
+  min-height: 100dvh;
   display: grid;
   place-items: center;
-  padding: 36px 24px;
+  padding: calc(36px + env(safe-area-inset-top, 0px))
+    calc(24px + env(safe-area-inset-right, 0px))
+    calc(36px + env(safe-area-inset-bottom, 0px))
+    calc(24px + env(safe-area-inset-left, 0px));
   color: #8e4054;
   background:
     radial-gradient(ellipse at 18% 18%, #fffdf9 0%, transparent 55%),
@@ -1577,8 +1584,8 @@
 /* A&W dawn palette */
 .garden-mark {
   position: absolute;
-  top: 24px;
-  left: 28px;
+  top: calc(24px + env(safe-area-inset-top, 0px));
+  left: calc(28px + env(safe-area-inset-left, 0px));
   z-index: 50;
   width: 104px;
   height: 112px;
@@ -1613,8 +1620,7 @@
 
 @media (max-width: 650px) {
   .garden-mark {
-    top: 24px;
-    left: 24px;
+    left: calc(24px + env(safe-area-inset-left, 0px));
     width: 92px;
     height: 99px;
 
@@ -1627,7 +1633,7 @@
 }
 
 .flower-container {
-  background: linear-gradient(180deg, #fff9f5 0%, #fbe4e8 42%, #f4b7bd 74%, #e88d91 100%);
+  background: var(--garden-background);
 }
 
 .night {
@@ -1825,7 +1831,17 @@
 }
 
 @media (max-width: 650px) {
+  .garden-music {
+    bottom: calc(max(22px, env(safe-area-inset-bottom, 0px)) + 14px);
+  }
+
   .side-lily--ivory { left: -24vmin; bottom: 5vmin; transform: rotate(-28deg) scale(0.52); }
   .side-lily--rose { left: 21vmin; bottom: 2vmin; transform: rotate(24deg) scale(0.45); }
   .lily-buds { left: -11vmin; transform: scale(0.7); transform-origin: bottom left; }
+}
+
+@media (max-width: 650px) and (orientation: portrait) {
+  .flowers {
+    bottom: clamp(60px, 10svh, 96px);
+  }
 }
