@@ -1360,3 +1360,472 @@
 .not-loaded * {
   animation-play-state: paused !important;
 }
+
+/* A little letter before the garden opens. */
+.welcome-screen {
+  min-height: 100vh;
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: 36px 24px;
+  color: #8e4054;
+  background:
+    radial-gradient(ellipse at 18% 18%, #fffdf9 0%, transparent 55%),
+    radial-gradient(ellipse at 88% 90%, #f2b6c2 0%, transparent 55%),
+    #fbe8e9;
+}
+
+.welcome-note {
+  width: min(100%, 440px);
+  padding: 42px 28px 30px;
+  text-align: center;
+  border: 1px solid #ead0cc;
+  border-radius: 8px 8px 42px 8px;
+  background: #fffcf8;
+  box-shadow: 7px 8px 0 #f8e4e5, 8px 9px 0 #e5bbc0, 0 20px 60px #a5506b1a;
+  animation: note-arrive 700ms ease-out both;
+
+  &__envelope {
+    display: block;
+    width: 78px;
+    height: 64px;
+    margin: 0 auto 22px;
+    transform: rotate(-7deg);
+  }
+
+  &__eyebrow {
+    margin-bottom: 20px;
+    color: #996575;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    font-family: var(--font-aesthetic), cursive;
+    font-size: clamp(39px, 8vw, 51px);
+    font-weight: 400;
+    line-height: 1.22;
+
+    span { display: block; }
+  }
+
+  &__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    min-height: 50px;
+    max-width: 100%;
+    margin-top: 32px;
+    padding: 13px 24px;
+    border: 1px solid #a63e5b;
+    border-radius: 999px;
+    background: #a63e5b;
+    color: #fffaf6;
+    font-family: var(--font-geist-sans), sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    box-shadow: 0 5px 14px #a63e5b20;
+    transition: background 180ms ease, transform 180ms ease;
+
+    svg { width: 19px; height: 19px; flex-shrink: 0; }
+    &:hover { background: #8f2f4a; transform: translateY(-2px); }
+    &:active { transform: translateY(0); }
+    &:focus-visible { outline: 2px solid #8f2f4a; outline-offset: 5px; }
+  }
+
+  &__signature {
+    margin-top: 27px;
+    color: #a86c7a;
+    font-family: var(--font-aesthetic), cursive;
+    font-size: 23px;
+    line-height: 1.4;
+  }
+
+  &__sound {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    min-height: 44px;
+    margin: 20px auto -14px;
+    padding: 5px 8px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: #8e4054;
+    font-family: var(--font-geist-sans), sans-serif;
+    font-size: 12px;
+    cursor: pointer;
+
+    svg { width: 17px; height: 17px; }
+    &:focus-visible { outline: 2px solid #8f2f4a; outline-offset: 3px; }
+    &[aria-checked="true"] .welcome-note__switch { background: #a63e5b; }
+    &[aria-checked="true"] .welcome-note__switch::after { transform: translateX(12px); }
+  }
+
+  &__switch {
+    position: relative;
+    width: 30px;
+    height: 18px;
+    border-radius: 999px;
+    background: #bd9ba4;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #fffaf6;
+    }
+  }
+}
+
+.garden-music {
+  position: fixed;
+  right: max(24px, env(safe-area-inset-right));
+  bottom: max(22px, env(safe-area-inset-bottom));
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: calc(100vw - 48px);
+  padding: 10px 10px 10px 17px;
+  border: 1px solid #ffffffb3;
+  border-radius: 999px;
+  background: #fff9f3f0;
+  color: #8e4054;
+  box-shadow: 0 5px 24px #89465b1a;
+  font-family: var(--font-geist-sans), sans-serif;
+
+  &__caption { min-width: 0; }
+  &__title { font-size: 10px; font-weight: 500; letter-spacing: 0.06em; }
+  &__status { margin-top: 4px; color: #986071; font-size: 10px; }
+
+  &__button {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border: 1px solid #e8c1c8;
+    border-radius: 50%;
+    background: #f8e5e9;
+    color: #963f59;
+    cursor: pointer;
+
+    svg { width: 19px; height: 19px; }
+    &:hover { background: #f1d2db; }
+    &:focus-visible { outline: 2px solid #8f2f4a; outline-offset: 3px; }
+  }
+
+  &__bars {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    width: 18px;
+    height: 22px;
+
+    i {
+      width: 3px;
+      height: 7px;
+      border-radius: 3px;
+      background: #bc7186;
+      animation: music-bar 850ms ease-in-out infinite alternate;
+      animation-play-state: paused;
+      &:nth-child(2) { height: 17px; animation-delay: -400ms; }
+      &:nth-child(3) { height: 12px; animation-delay: -650ms; }
+      &:nth-child(4) { height: 9px; animation-delay: -200ms; }
+    }
+  }
+
+  &[data-playing="true"] &__bars i { animation-play-state: running; }
+}
+
+@keyframes music-bar {
+  from { transform: scaleY(0.5); }
+  to { transform: scaleY(1); }
+}
+
+.garden-reveal {
+  outline: none;
+  animation: garden-reveal 900ms ease-out both;
+}
+
+@keyframes note-arrive {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes garden-reveal {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .welcome-note,
+  .garden-reveal { animation: none; }
+  .welcome-note__button { transition: none; }
+  .welcome-note__button:hover { transform: none; }
+  .garden-music__bars i { animation: none; }
+}
+
+/* A&W dawn palette */
+.garden-mark {
+  position: absolute;
+  top: 24px;
+  left: 28px;
+  z-index: 50;
+  width: 104px;
+  height: 112px;
+  user-select: none;
+
+  svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    transform: rotate(-7deg);
+    filter: drop-shadow(0 5px 6px rgba(127, 65, 77, 0.15));
+  }
+
+  &__letters {
+    position: absolute;
+    top: 43%;
+    left: 49%;
+    display: flex;
+    align-items: baseline;
+    gap: 2px;
+    color: #ad3451;
+    font-family: var(--font-aesthetic), cursive;
+    font-size: 26px;
+    line-height: 1;
+    transform: translate(-50%, -25%) rotate(-4deg);
+
+    span {
+      font-size: 0.7em;
+    }
+  }
+}
+
+@media (max-width: 650px) {
+  .garden-mark {
+    top: 24px;
+    left: 24px;
+    width: 92px;
+    height: 99px;
+
+    &__letters { font-size: 23px; }
+  }
+}
+
+:root {
+  --dark-color: #815768;
+}
+
+.flower-container {
+  background: linear-gradient(180deg, #fff9f5 0%, #fbe4e8 42%, #f4b7bd 74%, #e88d91 100%);
+}
+
+.night {
+  background:
+    radial-gradient(circle at 73% 19%, rgba(255, 253, 247, 0.93) 0 5vmin, transparent 5.2vmin),
+    radial-gradient(circle at 72% 19%, rgba(248, 185, 155, 0.22) 0 12vmin, transparent 23vmin),
+    radial-gradient(ellipse at 14% 70%, rgba(255, 255, 255, 0.52), transparent 32%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.4), transparent 53%);
+}
+
+.night::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.5;
+  background-image: radial-gradient(rgba(196, 52, 79, 0.26) 0.7px, transparent 0.8px);
+  background-size: 11px 11px;
+}
+
+.flower__leafs::after {
+  background-color: #ffe4dd !important;
+}
+
+.flower--1 .flower__leaf {
+  background-color: #e95679;
+  background-image: linear-gradient(to top, #bd2445, #f16183 53%, #fff9f7) !important;
+  box-shadow: inset 0 0 2vmin rgba(255, 255, 255, 0.78), 0 0 1.1vmin rgba(201, 45, 75, 0.2);
+}
+
+.flower--2 .flower__leaf {
+  background-color: #fffdf8;
+  background-image: linear-gradient(to top, #f0afab, #fff9f4 55%, #ffffff) !important;
+  box-shadow: inset 0 0 2vmin rgba(255, 255, 255, 0.9), 0 0 1.1vmin rgba(255, 216, 205, 0.72);
+}
+
+.flower--3 .flower__leaf {
+  background-color: #f58b75;
+  background-image: linear-gradient(to top, #c92d4b, #f6878c 52%, #fff8f5) !important;
+  box-shadow: inset 0 0 2vmin rgba(255, 255, 255, 0.75), 0 0 1.1vmin rgba(214, 59, 82, 0.22);
+}
+
+.flower__white-circle {
+  background-color: #fff7e4 !important;
+  box-shadow: 0 0 2.6vmin rgba(239, 180, 91, 0.47);
+}
+
+.flower__white-circle::after {
+  background-image: radial-gradient(circle, #fff7c4 0 17%, #e8b85a 19% 48%, #bd6c45 50%) !important;
+}
+
+.flower__line {
+  background-image:
+    linear-gradient(to left, rgba(111, 78, 67, 0.14), transparent, rgba(255, 255, 255, 0.54)),
+    linear-gradient(to top, transparent 10%, #5c856d, #a2bd82) !important;
+  box-shadow: inset 0 0 2px rgba(85, 72, 55, 0.24) !important;
+}
+
+.flower__line__leaf {
+  background-image: linear-gradient(to top, rgba(68, 106, 78, 0.64), #9fbd83) !important;
+}
+
+.flower__light,
+.flower__light:nth-child(odd) {
+  background-color: #f7b357 !important;
+  box-shadow: 0 0 1.2vmin rgba(232, 115, 100, 0.7);
+}
+
+.flower__grass,
+.long-g .leaf,
+.flower__g-long,
+.flower__g-right .leaf,
+.flower__g-front__line,
+.flower__g-fr .leaf {
+  --c: #6d996e;
+}
+
+.flower__g-right .leaf,
+.flower__g-fr .leaf {
+  border-left-color: #6d996e !important;
+}
+
+.flower__g-front__leaf,
+.flower__g-fr__leaf {
+  background-image:
+    linear-gradient(to bottom left, transparent, #8aa472 98%),
+    linear-gradient(to bottom right, #e7f0cf 50%, transparent 50%, transparent) !important;
+}
+
+.flower__grass__overlay {
+  background-color: rgba(177, 87, 95, 0.16) !important;
+}
+
+/* Supporting lily forms: connected blooms and buds. */
+.side-lily {
+  position: absolute;
+  // Keep the accent flowers readable instead of letting the foreground grass
+  // slice through their stems and petals.
+  z-index: 32;
+  bottom: 8vmin;
+  width: 17vmin;
+  height: 39vmin;
+  transform-origin: bottom center;
+  animation: side-lily-grow 1.8s 1.55s backwards, side-lily-sway 5.4s 3.4s ease-in-out infinite;
+
+  &--ivory { left: -33vmin; transform: rotate(-20deg) scale(0.7); }
+  &--rose { left: 30vmin; bottom: 7vmin; transform: rotate(18deg) scale(0.61); animation-delay: 1.85s, 3.7s; }
+
+  &__stem {
+    position: absolute;
+    bottom: 0;
+    left: 7.9vmin;
+    width: 1.1vmin;
+    height: 30vmin;
+    border-radius: 100% 100% 0 0;
+    background: linear-gradient(to right, #49745d, #9dbd7a, #47705b);
+  }
+
+  &__leaves i {
+    position: absolute;
+    bottom: 12vmin;
+    left: 7vmin;
+    width: 8vmin;
+    height: 3.5vmin;
+    border-radius: 100% 0 100% 0;
+    background: linear-gradient(145deg, #b7cc91, #5c856d 72%);
+    transform-origin: left center;
+  }
+
+  &__leaves i:first-child { transform: rotate(-31deg); }
+  &__leaves i:last-child { bottom: 19vmin; transform: scaleX(-1) rotate(-24deg); }
+
+  &__bloom {
+    position: absolute;
+    top: 0.5vmin;
+    left: -0.05vmin;
+    width: 17vmin;
+    height: 17vmin;
+    overflow: visible;
+    filter: drop-shadow(0 0.4vmin 0.5vmin rgba(130, 53, 69, 0.12));
+  }
+}
+
+.lily-buds {
+  position: absolute;
+  z-index: 9;
+  bottom: 8vmin;
+  left: -15vmin;
+}
+
+.lily-bud {
+  position: absolute;
+  width: 5vmin;
+  height: 25vmin;
+  transform-origin: bottom center;
+  animation: bud-rise 1.4s backwards;
+
+  &--one { left: 3vmin; bottom: 0; transform: rotate(-14deg) scale(0.78); animation-delay: 2.1s; }
+  &--two { left: 23vmin; bottom: -2vmin; transform: rotate(12deg) scale(0.94); animation-delay: 2.45s; }
+  &--three { left: 40vmin; bottom: 1vmin; transform: rotate(-8deg) scale(0.68); animation-delay: 2.75s; }
+
+  i {
+    position: absolute;
+    bottom: 0;
+    left: 2.1vmin;
+    width: 0.8vmin;
+    height: 20vmin;
+    border-radius: 100% 100% 0 0;
+    background: linear-gradient(to right, #48705b, #9dbd7a, #48705b);
+  }
+
+  b {
+    position: absolute;
+    top: 0;
+    left: 0.4vmin;
+    width: 4.6vmin;
+    height: 7.4vmin;
+    border-radius: 85% 15% 82% 18%;
+    transform: rotate(-12deg);
+    background: linear-gradient(130deg, #fff8f6, #f47b87 54%, #c92d4b);
+    box-shadow: inset -0.5vmin -0.5vmin 0.8vmin rgba(115, 30, 58, 0.18), 0 0 1vmin rgba(219, 68, 92, 0.2);
+  }
+}
+
+@keyframes side-lily-grow {
+  from { opacity: 0; scale: 1 0; }
+}
+
+@keyframes side-lily-sway {
+  0%, 100% { rotate: -1.5deg; }
+  50% { rotate: 1.5deg; }
+}
+
+@keyframes bud-rise {
+  from { opacity: 0; transform: scaleY(0); }
+}
+
+@media (max-width: 650px) {
+  .side-lily--ivory { left: -24vmin; bottom: 5vmin; transform: rotate(-28deg) scale(0.52); }
+  .side-lily--rose { left: 21vmin; bottom: 2vmin; transform: rotate(24deg) scale(0.45); }
+  .lily-buds { left: -11vmin; transform: scale(0.7); transform-origin: bottom left; }
+}
